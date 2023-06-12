@@ -27,8 +27,12 @@ const itemsSchema = new Schema({
     },
     rating:{
         type:Number,
-        required:true
-    }
+    
+    },
+    // quantity:{
+    //     type:Number,
+    //     required:true
+    // }
 }) 
 
 

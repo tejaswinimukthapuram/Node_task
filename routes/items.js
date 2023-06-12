@@ -53,10 +53,11 @@ router.post('/refreshtoken', function(){
 })
 
 
-router.get('/',  authenticateToken, itemsController.getItems)
-router.post('/', itemsController.createItems)
-router.put('/:id', itemsController.updateItem)
-router.delete('/:id', itemsController.deleteItem)
+router.get('/',  itemsController.getItems)
+router.get('/:id',itemsController.getItem)
+router.post('/',  authenticateToken,itemsController.createItems)
+router.put('/:id',  authenticateToken,itemsController.updateItem)
+router.delete('/:id', authenticateToken, itemsController.deleteItem)
 
 
 

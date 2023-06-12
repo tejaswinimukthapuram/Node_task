@@ -90,7 +90,7 @@ const getUsers =  function(req, res, next){
 }
 
 const logoutUser = async function(req, res){
-    console.log("HEllo")
+    console.log("Hello")
     req.session.destroy();
     // res.redirect('/')
     console.log(req.session)
@@ -99,7 +99,7 @@ const logoutUser = async function(req, res){
 
 
 const generateAccessToken = (payload)=>{
-    return jwt.sign(payload, process.env.SECRET_CODE)
+    return jwt.sign(payload, process.env.SECRET_CODE,{expiresIn:'5d'})
 }
 
 
@@ -129,16 +129,16 @@ const getUserBasedOnDetails = async function(req, res, next){
               const token=generateAccessToken({username:username,email:email,password:password})
               const refreshtoken = jwt.sign({username:username,email:email,password:password}, process.env.REFRESH_SECRET_CODE)
           
-            res.cookie('refreshtoken',refreshtoken,{
-                httpOnly:true,  //makes sure that we cant modify this cookie with javascript
-                path:'/refresh_token'  //we dont want to send this cookie with each request,we just do it when we are on rerefresh_token end point
+            // res.cookie('refreshtoken',refreshtoken,{
+            //     httpOnly:true,  //makes sure that we cant modify this cookie with javascript
+            //     path:'/refresh_token'  //we dont want to send this cookie with each request,we just do it when we are on rerefresh_token end point
         
-            }
+            // }
 
            
             
-            )
-            res.send({token:token})
+            //)
+            res.send({token:token,refreshtoken:refreshtoken})
          }
         
     }

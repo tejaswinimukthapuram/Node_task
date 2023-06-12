@@ -18,9 +18,35 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var usersListRouter = require('./routes/userslist')
 var itemsRouter = require('./routes/items')
+var cartRouter=require('./routes/cart')
+var orderRouter = require('./routes/orders')
+
+
 require('dotenv').config()
 
 var app = express();
+
+app.use(cors());
+app.options("*", cors());
+
+app.use((req, res, next) => {
+
+res.header("Access-Control-Allow-Origin", "*");
+
+res.setHeader("Access-Control-Allow-Origin", "*");
+
+ res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
+
+ res.setHeader("Access-Control-Allow-Headers", [
+ "Content-Type",
+ "Authorization",
+ ]);
+
+ res.header("Access-Control-Allow-Headers", ["Content-Type", "Authorization"]);
+
+next();
+
+});
 
 main()
 .then((res)=>console.log("Database Connected"))
@@ -80,10 +106,10 @@ app.set('view engine', 'jade');
 //   saveUninitialized: false,
 //   secret: 'some secret'
 // }))
-
-app.use(logger('combined'));
+// app.use(cors());
+app.use(logger('dev'));
 app.use(express.json());
-app.use(cors());
+
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -92,6 +118,8 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/userslist', usersListRouter)
 app.use('/items', itemsRouter)
+app.use('/cart', cartRouter)
+app.use('/orders', orderRouter);
 
 
 
@@ -116,6 +144,8 @@ app.use('/items', itemsRouter)
 // //     console.log("Server is ready to take our messages");
 // //   }
 // // });
+
+
 
 
 
